@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/User');
 
 exports.signup = (req, res, next) => {
@@ -37,7 +39,13 @@ exports.login = (req, res, next) => {
                     // Si on arrive ici c'est que valid = true (les résultats sont les mêmes)
                     res.status(200).json({
                         userId: user._id,
-                        token: 'TOKEN'
+                        // Générer un token grâce au package jsonwebtoken
+                        token: jwt.sign(
+                            { userId: user._id },
+                            // En production, on changera la clé secrète par une chaîne plus longue et plus aléatoire
+                            'RANDOM_TOKEN_SECRET', 
+                            { expiresIn: '24h' }
+                        )
                     });
                 })
                 .catch(error => res.status(500).json({ error }));
