@@ -1,4 +1,4 @@
-# Mikrotik
+# Go Full Stack
 Passez au Full Stack avec Node.js, Express et MongoDB
 
 ## :information_source: Description
